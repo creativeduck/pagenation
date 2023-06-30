@@ -58,9 +58,13 @@ export default function Pokemon({
         <link rel="next" href={`/items?page=${Number(page) + 1}`} />
       )}
       <div className={styles.main} id="mainContainer">
-        {pages.map((page, index) => (
+        {pages.map((item, index) => (
           <div className={`${styles.page} page`} key={index}>
-            <ItemPage page={index + 1} items={page} fetchData={handle} />
+            <ItemPage
+              page={Number(page) + index}
+              items={item}
+              fetchData={handle}
+            />
           </div>
         ))}
       </div>
