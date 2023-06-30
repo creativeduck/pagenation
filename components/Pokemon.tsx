@@ -5,12 +5,10 @@ import { useEffect, useRef, useState } from 'react'
 import ItemPage from './ItemPage'
 
 export default function Pokemon({
-  count,
   page,
   items,
   fetchData,
 }: {
-  count: number
   page: number
   items: { name: string; url: string }[]
   fetchData: (offset: number) => Promise<{
@@ -53,10 +51,6 @@ export default function Pokemon({
 
   return (
     <>
-      {page > 1 && <link rel="prev" href={`/items?page=${page - 1}`} />}
-      {page < Math.floor(count / 20) && (
-        <link rel="next" href={`/items?page=${Number(page) + 1}`} />
-      )}
       <div className={styles.main} id="mainContainer">
         {pages.map((item, index) => (
           <div className={`${styles.page} page`} key={index}>

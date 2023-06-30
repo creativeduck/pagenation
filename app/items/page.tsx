@@ -59,11 +59,13 @@ export default async function page({
   }
 
   return (
-    <Pokemon
-      count={data.count}
-      page={page}
-      items={data.results}
-      fetchData={fetchData}
-    />
+    <>
+      {page > 1 && <link rel="prev" href={`/items?page=${page - 1}`} />}
+      {page < Math.floor(data.count / 20) && (
+        <link rel="next" href={`/items?page=${Number(page) + 1}`} />
+      )}
+
+      <Pokemon page={page} items={data.results} fetchData={fetchData} />
+    </>
   )
 }
