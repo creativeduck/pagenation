@@ -1,0 +1,16 @@
+.main {
+  padding: 10px;
+  background: white;
+  margin: 10px;
+}
+
+.itemContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  margin: 20px;
+}
