@@ -28,16 +28,18 @@ async function getData(offset: number) {
     method: 'GET',
   })
   const {
+    count,
     next,
     previous,
     results,
   }: {
+    count: number
     next: string
     previous: string
     results: { name: string; url: string }[]
   } = await result.json()
 
-  return { next, previous, results }
+  return { count, next, previous, results }
 }
 
 export default async function page({
@@ -56,5 +58,12 @@ export default async function page({
     return await getData(offset)
   }
 
-  return <Pokemon page={page} items={data.results} fetchData={fetchData} />
+  return (
+    <Pokemon
+      count={data.count}
+      page={page}
+      items={data.results}
+      fetchData={fetchData}
+    />
+  )
 }
