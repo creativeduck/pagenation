@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import styles from './page.module.css'
 import Pokemon from '@/components/Pokemon'
+import Link from 'next/link'
 
 export async function generateMetadata({
   searchParams,
@@ -50,7 +52,7 @@ export default async function page({
   }
 }) {
   const page = searchParams.page ? searchParams.page : 1
-  const data = await getData((page - 1) * 20)
+  const { count, results } = await getData((page - 1) * 20)
 
   async function fetchData(offset: number) {
     'use server'
@@ -61,11 +63,21 @@ export default async function page({
   return (
     <>
       {page > 1 && <link rel="prev" href={`/items?page=${page - 1}`} />}
-      {page < Math.floor(data.count / 20) && (
+      {page < Math.floor(count / 20) && (
         <link rel="next" href={`/items?page=${Number(page) + 1}`} />
       )}
 
-      <Pokemon page={page} items={data.results} fetchData={fetchData} />
+      <Pokemon page={page} items={results} fetchData={fetchData}>
+        <>
+          <div className={`${styles.page} page`}>
+            {results.map(item => (
+              <div className={`${styles.item}`} key={item.name}>
+                <Link href={item.url}>{item.name}</Link>
+              </div>
+            ))}
+          </div>
+        </>
+      </Pokemon>
     </>
   )
 }
