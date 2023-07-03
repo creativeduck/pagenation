@@ -5,10 +5,12 @@ import { useEffect, useRef, useState } from 'react'
 import ItemPage from './ItemPage'
 
 export default function Pokemon({
+  children,
   page,
   items,
   fetchData,
 }: {
+  children: React.ReactNode
   page: number
   items: { name: string; url: string }[]
   fetchData: (offset: number) => Promise<{
@@ -52,15 +54,21 @@ export default function Pokemon({
   return (
     <>
       <div className={styles.main} id="mainContainer">
-        {pages.map((item, index) => (
-          <div className={`${styles.page} page`} key={index}>
-            <ItemPage
-              page={Number(page) + index}
-              items={item}
-              fetchData={handle}
-            />
-          </div>
-        ))}
+        {pages.length > 0 ? (
+          <>
+            {pages.map((item, index) => (
+              <div className={`${styles.page} page`} key={index}>
+                <ItemPage
+                  page={Number(page) + index}
+                  items={item}
+                  fetchData={handle}
+                />
+              </div>
+            ))}
+          </>
+        ) : (
+          <>{children}</>
+        )}
       </div>
     </>
   )
